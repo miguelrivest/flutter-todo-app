@@ -63,62 +63,67 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(30, 15, 30, 90),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Tasks to do:',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                const Divider(
-                  color: Colors.grey,
-                  thickness: 1,
-                ),
-                Expanded(
-                  child: _submittedItems.isEmpty
-                      ? Center(
-                    child: Text(
-                      'No tasks yet! Add one below.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
-                      ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 15, 30, 90),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Tasks to do:',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
-                  )
-                      : ListView.builder(
-                    itemCount: _submittedItems.length,
-                    itemBuilder: (context, index) {
-                      final item = _submittedItems[index];
-                      return ToDoItem(
-                        title: item,
-                        onDelete: () {
-                          setState(() {
-                            _submittedItems.removeAt(index);
-                          });
-                        },
-                      );
-                    },
                   ),
-                ),
-              ],
+                  const Divider(
+                    color: Colors.grey,
+                    thickness: 1,
+                  ),
+                  Expanded(
+                    child: _submittedItems.isEmpty
+                        ? Center(
+                      child: Text(
+                        'No tasks yet! Add one below.',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                        ),
+                      ),
+                    )
+                        : ListView.builder(
+                      itemCount: _submittedItems.length,
+                      itemBuilder: (context, index) {
+                        final item = _submittedItems[index];
+                        return ToDoItem(
+                          title: item,
+                          onDelete: () {
+                            setState(() {
+                              _submittedItems.removeAt(index);
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Positioned(
-            left: 30.0,
-            right: 30.0,
-            bottom: 15.0,
-            child: MyTextField(
-              onSubmitted: _handleSubmittedText,
+            Positioned(
+              left: 30.0,
+              right: 30.0,
+              bottom: 15.0,
+              child: MyTextField(
+                onSubmitted: _handleSubmittedText,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
