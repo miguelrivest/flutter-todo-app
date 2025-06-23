@@ -161,19 +161,23 @@ class _MyTextFieldState extends State<MyTextField> {
               ),
             ),
             onSubmitted: (String value) {
-              widget.onSubmitted(value);
-              _controller.clear();
-              _focusNode.requestFocus();
+              if (value.isNotEmpty) {
+                widget.onSubmitted(value);
+                _controller.clear();
+                _focusNode.requestFocus();
+              }
             },
           ),
         ),
         IconButton(
           icon: const Icon(Icons.add_task),
           onPressed: () {
-            widget.onSubmitted(_todoText);
-            _controller.clear();
-            _todoText = '';
-            _focusNode.requestFocus();
+            if (_todoText.isNotEmpty) {
+              widget.onSubmitted(_todoText);
+              _controller.clear();
+              _todoText = '';
+              _focusNode.requestFocus();
+            }
           },
         ),
       ],
